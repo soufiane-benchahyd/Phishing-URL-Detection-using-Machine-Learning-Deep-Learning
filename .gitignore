@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pickle
+*.dat
+models/
+.env
+.ipynb_checkpoints/
