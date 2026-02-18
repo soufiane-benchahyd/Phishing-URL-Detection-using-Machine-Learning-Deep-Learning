@@ -1,135 +1,289 @@
-n
-# Phishing URL Detection using Machine Learning & Deep Learning
 
-**Phishing URL Detection** is a project that identifies malicious websites using a combination of **Machine Learning (ML)** and **Deep Learning (DL)** techniques. It also comes with a **user-friendly web application** built with **Streamlit** for real-time URL analysis.
+# 🔐 Phishing URL Detection using Machine Learning & Deep Learning
 
----
+## 📌 Project Overview
 
-## 🚀 Features
+Phishing websites are a common form of cyberattack where malicious actors mimic legitimate websites to steal sensitive information.
 
-- Detects phishing websites using **Deep Learning (CNN)**.
-- Detects phishing websites using **Machine Learning (XGBoost)**.
-- Simple **command-line interface** to test URLs.
-- Interactive **web application** with real-time predictions.
-- Supports batch URL testing via file input.
-- Displays probability of phishing and prediction status.
-- Includes **visualizations** of model accuracy.
+This project builds an **AI-based phishing detection system** using both:
 
----
+* 🧠 **Machine Learning (ML)**
+* 🤖 **Deep Learning (DL)**
 
-## 🛠️ Project Structure
+It also includes a **Streamlit web application** that allows real-time phishing URL detection.
 
-Phishing-URL-Detection/
-│
-├── data/                   # Dataset files (legitimate & phishing URLs)
-├── models/                 # Trained models and tokenizer
-├── screenshot/             # Screenshots for README
-├── src/                    # Scripts (training, prediction, feature extraction)
-├── templates/              # Web app templates
-├── app.py                  # Streamlit web app
-├── README.md               # Project description and instructions
-├── requirements.txt        # Python dependencies
-└── predictions.csv         # Sample output of predictions
+The system analyzes URLs using extracted features and predicts whether a website is:
 
-````
+* ✅ Legitimate (0)
+* 🚨 Phishing (1)
 
 ---
 
-## 📊 Model Performance
+# 🎯 Objectives
 
-### Deep Learning (CNN)
-
-![Model Accuracy](screenshot/Figure_1.png)  
-*Model accuracy over training and validation sets.*
-
-### Machine Learning (XGBoost)
-
-- Achieves high precision and recall on the dataset.
-- Fast and lightweight for batch predictions.
+* Extract meaningful URL-based and content-based features.
+* Train and compare multiple ML models.
+* Train Deep Learning models (Neural Networks).
+* Evaluate performance using accuracy and other metrics.
+* Deploy a real-time phishing detection web app.
 
 ---
 
-## 💻 Example Usage
+# 📂 Dataset & Data Collection
 
-### Terminal / Command-Line
+## 🔹 Phishing URLs
 
+Phishing URLs were collected from:
+
+👉 [https://www.phishtank.com/developer_info.php](https://www.phishtank.com/developer_info.php)
+
+* 5000 phishing URLs selected randomly.
+* Updated hourly from open-source service PhishTank.
+
+## 🔹 Legitimate URLs
+
+Legitimate URLs were obtained from:
+
+👉 [https://www.unb.ca/cic/datasets/url-2016.html](https://www.unb.ca/cic/datasets/url-2016.html)
+
+* 5000 benign URLs selected randomly.
+* From the University of New Brunswick dataset.
+
+All datasets are stored inside:
+
+```
+DataFiles/
+```
+
+---
+
+# 🛠 Feature Extraction
+
+A total of **17 features** are extracted from each URL.
+
+### 🔹 Address Bar Based Features (9 features)
+
+Examples:
+
+* URL length
+* Presence of IP address
+* Use of “@” symbol
+* Number of subdomains
+
+### 🔹 Domain Based Features (4 features)
+
+Examples:
+
+* Domain age
+* DNS record
+* Web traffic
+
+### 🔹 HTML & JavaScript Based Features (4 features)
+
+Examples:
+
+* IFrame usage
+* Redirects
+* JavaScript tricks
+
+Feature extraction is implemented in:
+
+```
+URL Feature Extraction.ipynb
+```
+
+Final processed dataset:
+
+```
+DataFiles/5.urldata.csv
+```
+
+---
+
+# 🤖 Machine Learning Models
+
+The dataset is split into:
+
+* 80% Training (8000 samples)
+* 20% Testing (2000 samples)
+
+This is a **supervised classification problem**.
+
+## ML Models Implemented:
+
+* Decision Tree
+* Random Forest
+* Support Vector Machine (SVM)
+* Multilayer Perceptron (MLP)
+* XGBoost
+* Autoencoder Neural Network
+
+📌 **Best performing ML model:**
+XGBoost Classifier — **86.4% Accuracy**
+
+Saved model file:
+
+```
+XGBoostClassifier.pickle.dat
+```
+
+---
+
+# 🧠 Deep Learning Model
+
+In addition to ML, a **Deep Learning Neural Network** was implemented using TensorFlow/Keras.
+
+* Fully connected neural network (Dense layers)
+* ReLU activation
+* Sigmoid output
+* Binary cross-entropy loss
+* Adam optimizer
+
+The DL model is used for:
+
+* URL classification
+* Probability-based phishing detection
+* Comparison with ML models
+
+---
+
+# 📊 Model Performance
+
+## Deep Learning Model
+
+![Model Accuracy](screenshot/Figure_1.png)
+
+* Shows training vs validation accuracy.
+* Helps visualize learning performance.
+
+## Machine Learning Model (XGBoost)
+
+* High precision and recall.
+* Lightweight and efficient.
+* Suitable for production deployment.
+
+---
+
+# 💻 Web Application (Streamlit)
+
+A real-time phishing detection system was built using **Streamlit**.
+
+## Run the App:
+
+```bash
+streamlit run app.py
+```
+
+## Features:
+
+* Enter a URL manually
+* Upload multiple URLs
+* Real-time phishing probability
+* Clear visual feedback (safe / phishing)
+
+### Web App Interface
+
+![Web App Results](screenshot/WhatsApp Image 2026-02-18 at 19.54.44.jpeg)
+
+---
+
+# 🖥 Command Line Prediction
+
+You can also test URLs via terminal:
+
+```bash
 python src/predict.py https://example.com
+```
 
-**Output Example:**
+### Example Output
 
 ![Terminal Results](screenshot/WhatsApp Image 2026-02-18 at 21.25.39.jpeg)
 
 ---
 
-### Web Application
+# 📁 Project Structure
 
-Run the app using Streamlit:
-
-streamlit run app.py
-
-**Web Interface:**
-
-![Web App Results](screenshot/WhatsApp Image 2026-02-18 at 19.54.44.jpeg)
-
-* Enter URLs to check for phishing.
-* Shows **phishing probability** and **prediction**.
-* Uses **colors** and **icons** for easy understanding.
+```
+Phishing-Website-Detection/
+│
+├── DataFiles/                 # Original datasets
+├── models/                    # Saved ML & DL models
+├── screenshot/                # README screenshots
+├── src/                       # Feature extraction & prediction scripts
+├── app.py                     # Streamlit web application
+├── requirements.txt           # Dependencies
+├── XGBoostClassifier.pickle.dat
+└── README.md
+```
 
 ---
 
-## ⚙️ Installation
+# ⚙️ Installation
 
-1. Clone the repository:
-
-git clone https://github.com/yourusername/Phishing-URL-Detection-using-Machine-Learning-Deep-Learning.git
-cd Phishing-URL-Detection-using-Machine-Learning-Deep-Learning
-
-2. Install dependencies:
+## 1️⃣ Clone Repository
 
 ```bash
+git clone https://github.com/yourusername/Phishing-Website-Detection.git
+cd Phishing-Website-Detection
+```
+
+## 2️⃣ Create Virtual Environment (Recommended)
+
+conda create -n phishing-env python=3.13
+conda activate phishing-env
+
+
+## 3️⃣ Install Dependencies
+
+
 pip install -r requirements.txt
-```
 
-3. Run the Streamlit web app:
 
-```bash
+## 4️⃣ Run Web App
+
+
 streamlit run app.py
-```
+
 
 ---
 
-## 📁 Datasets
+# 📈 Future Improvements
 
-* `data/urldata_updated.csv`: Combined dataset of legitimate and phishing URLs.
-* `data/5.urldata.csv`: Original dataset.
-* Additional CSVs used for training ML/DL models.
-
----
-
-## ⚡ Notes
-
-* Threshold for phishing detection in DL model is adjustable.
-* Both ML and DL models can be extended to new datasets.
-* The project demonstrates **practical applications of AI in cybersecurity**.
+* Create a browser extension.
+* Improve DL architecture (CNN / LSTM for URL sequences).
+* Deploy as a cloud API.
+* Integrate real-time phishing database updates.
+* Add explainable AI (SHAP values).
 
 ---
 
-## 📸 Screenshots
+# 🔐 Why This Project Matters
 
-1. Model Accuracy: `screenshot/Figure_1.png`
-2. Terminal Prediction Results: `screenshot/WhatsApp Image 2026-02-18 at 21.25.39.jpeg`
-3. Web App Prediction Results: `screenshot/WhatsApp Image 2026-02-18 at 19.54.44.jpeg`
-4. Additional Figures: `screenshot/Figure_3.png`
+Phishing attacks are increasing every year.
+This project demonstrates how **AI and Machine Learning can be applied in cybersecurity** to detect malicious websites automatically.
 
-```
+It combines:
+
+* Feature engineering
+* Supervised machine learning
+* Deep learning
+* Real-time deployment
+* Practical security application
 
 ---
 
-If you want, I can **also suggest some nice visual touches** for the README:  
+# 📽 Presentation
 
-- Badges for Python version, Streamlit, ML/DL.  
-- A color-coded table for prediction examples.  
-- Maybe even GIFs of the web app in action.  
+Project presentation video:
+[https://youtu.be/I1refTZp-pg](https://youtu.be/I1refTZp-pg)
 
-Do you want me to do that next?
-```
+Slides:
+Phishing Website Detection by Machine Learning Techniques Presentation.pdf
+
+---
+
+# 👨‍💻 Author
+
+Developed as a Machine Learning & Cybersecurity project.
+Focused on applying AI to real-world phishing detection problems.
+
