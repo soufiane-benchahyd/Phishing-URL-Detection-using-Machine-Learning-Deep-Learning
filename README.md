@@ -272,16 +272,6 @@ It combines:
 
 ---
 
-# 📽 Presentation
-
-Project presentation video:
-[https://youtu.be/I1refTZp-pg](https://youtu.be/I1refTZp-pg)
-
-Slides:
-Phishing Website Detection by Machine Learning Techniques Presentation.pdf
-
----
-
 # 👨‍💻 Author
 
 Developed as a Machine Learning & Cybersecurity project.
